@@ -14,15 +14,13 @@ class Game:
         self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
-        #self.player = Dinosaur()
+        self.player = Dinosaur()
+        self.player.run()
 
     def run(self):
         # Game loop: events - update - draw      
         self.playing = True
-        self.player = Dinosaur()
-        self.player.run()
         while self.playing:
-
             self.events()
             self.update()
             self.draw()
@@ -34,7 +32,7 @@ class Game:
                 self.playing = False
 
     def update(self):
-        pass
+        self.player.run()
 
     def draw(self):
         self.clock.tick(FPS)
