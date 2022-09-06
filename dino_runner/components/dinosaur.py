@@ -34,4 +34,4 @@ class Dinosaur():
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
 
-        self.step_index += 0.1   
+        self.step_index += 0.5   
