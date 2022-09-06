@@ -6,7 +6,7 @@ from dino_runner.utils.constants import RUNNING
 
 class Dinosaur():
     X_POS = 80
-    Y_POS = 110
+    Y_POS = 310
 
     def __init__(self) -> None:
         self.image = RUNNING[0]
@@ -18,6 +18,9 @@ class Dinosaur():
 
         self.step_index = 0
 
+    def events(self):
+        pass
+    
     def update(self):
         pass
 
@@ -28,7 +31,7 @@ class Dinosaur():
         self.image = RUNNING[0] if self.step_index < 5 else RUNNING[1]
         self.dino_rect = self.image.get_rect()
 
-        self.dino_rect_x = self.X_POS
-        self.dino_rect_y = self.Y_POS
+        self.dino_rect.x = self.X_POS
+        self.dino_rect.y = self.Y_POS
 
         self.step_index += 1   
