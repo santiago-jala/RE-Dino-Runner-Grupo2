@@ -4,8 +4,6 @@ from dino_runner.components.Obstaculo import Obstacle
 
 from dino_runner.utils.constants import BIRD
 import random
-global x
-run = True
 
 class Bird(Obstacle):
     def __init__ (self, image):
