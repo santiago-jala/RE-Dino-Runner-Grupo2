@@ -9,7 +9,7 @@ class Bird(Obstacle):
     def __init__ (self, image):
         self.type = 0
         super(). __init__ (image, self.type)
-        bird_posible_spawns = [350, 280, 220]
+        bird_posible_spawns = [330, 272, 220]
         self.rect.y = bird_posible_spawns[random.randint(0, 2)] 
         self.animation = 0
 

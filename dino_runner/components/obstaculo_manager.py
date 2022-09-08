@@ -17,7 +17,6 @@ class ObstacleManager:
     def get_obstacle(self):
         index = random.randint(0,1)
         return self.obs[index]()
-        
     def update(self, game):
         if len(self.obstacles) == 0:
             self.obstacles.append(self.get_obstacle())
@@ -25,7 +24,8 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if (game.player.dino_rect.colliderect(obstacle.rect)):
-                pygame.time.delay(500)
+                pygame.time.delay(0)
+                print("D E A D \n D E A D ")
                 # game.playing = False
 
                     
