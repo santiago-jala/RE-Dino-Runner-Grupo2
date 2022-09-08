@@ -1,5 +1,6 @@
 import pygame
 
+from dino_runner.components.player_hearts.player_heart_manager import PlayerHeartManager
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstaculo_manager import ObstacleManager
@@ -16,7 +17,8 @@ class Game:
         self.x_pos_bg = 0
         self.y_pos_bg = 380
         self.player = Dinosaur()
-        self.obstacle_manager = ObstacleManager() 
+        self.obstacle_manager = ObstacleManager()
+        self.player_heart_manager = PlayerHeartManager() 
 
     def run(self):
         # Game loop: events - update - draw      
@@ -25,7 +27,7 @@ class Game:
             self.events()
             self.update()
             self.draw()
-        pygame.quit()
+ 
 
     def events(self):
         for event in pygame.event.get():
@@ -33,7 +35,8 @@ class Game:
                 self.playing = False
 
     def update(self):
-        self.player.run()
+        user_input = pygame.key.get_pressed()
+        self.player.update(user_input)
         self.obstacle_manager.update(self)
 
     def draw(self):
@@ -42,6 +45,7 @@ class Game:
         self.draw_background()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
+        self.player_heart_manager.draw(self.screen)
 
         pygame.display.update()
         pygame.display.flip()
