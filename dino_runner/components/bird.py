@@ -16,7 +16,7 @@ class Bird(Obstacle):
     def draw(self, screen):
         screen.blit(self.image[self.type], self.rect)
         self.animation += 1
-        if self.animation % 5 == 0:
+        if self.animation % 7 == 0:
             self.type = (self.type + 1) % 2
 
 

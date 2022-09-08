@@ -1,5 +1,6 @@
 import pygame
 
+from dino_runner.components import text_utils
 from dino_runner.components.player_hearts.player_heart_manager import PlayerHeartManager
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 from dino_runner.components.dinosaur import Dinosaur
@@ -16,6 +17,7 @@ class Game:
         self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
+        self.points = 0
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.player_heart_manager = PlayerHeartManager() 
@@ -46,6 +48,7 @@ class Game:
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.player_heart_manager.draw(self.screen)
+        self.score()
 
         pygame.display.update()
         pygame.display.flip()
@@ -58,3 +61,8 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+
+    def score(self):
+        self.points += 1
+        score, score_rect = text_utils.get_score_element(self.points)
+        self.screen.blit(score, score_rect)
