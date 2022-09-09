@@ -2,7 +2,7 @@ from math import gamma
 import pygame
 from dino_runner.components.Obstaculo import Obstacle
 
-from dino_runner.utils.constants import BIRD
+
 import random
 
 class Bird(Obstacle):
