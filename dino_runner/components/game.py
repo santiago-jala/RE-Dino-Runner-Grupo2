@@ -9,6 +9,7 @@ from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstaculo_manager import ObstacleManager
 from dino_runner.components.power_up.power_up_manager import PowerUpManager
 from dino_runner.components.Clouds.BackgroundManager import BackgroundManager
+from dino_runner.components.power_up.heart_power_up_manager import HeartPowerUpManager
 
 class Game:
     def __init__(self):
@@ -18,18 +19,21 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.playing = False
-        self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
-        self.points = 0
         self.running = True
         self.death_count = 0
+        self.start_match_value()
 
+    def start_match_value(self):
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.player_heart_manager = PlayerHeartManager()
         self.power_up_manager = PowerUpManager()
+        self.heart_power_up_manager = HeartPowerUpManager()
         self.background_manager = BackgroundManager() 
+        self.points = 0
+        self.game_speed = 20
 
     def run(self):
         # Game loop: events - update - draw      
@@ -42,6 +46,7 @@ class Game:
 
     def create_comment(self):
         self.power_up_manager.reset_power_ups(self.points)
+        self.heart_power_up_manager.reset_power_ups(self.points)
 
     def events(self):
         for event in pygame.event.get():
@@ -52,6 +57,7 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.power_up_manager.update(self.points, self.game_speed, self.player)
+        self.heart_power_up_manager.update(self, self.points, self.game_speed, self.player)
         self.obstacle_manager.update(self)
         self.background_manager.update(self)
 
@@ -64,6 +70,7 @@ class Game:
         self.background_manager.draw(self.screen)
         self.player_heart_manager.draw(self.screen)
         self.power_up_manager.draw(self.screen)
+        self.heart_power_up_manager.draw(self.screen)
         self.score()
 
         self.player.check_lives()
@@ -105,10 +112,10 @@ class Game:
         half_screen_height = SCREEN_HEIGHT // 2
 
         if death_count == 0:
-            text, text_rect = text_utils.get_centered_message("Press any Key to Start")
+            text, text_rect = text_utils.get_centered_message("Welcome to the DINOSAUR GAME Press any Key to Start")
             self.screen.blit(text, text_rect)
         elif death_count > 0:
-            text, text_rect = text_utils.get_centered_message("Press any Key to Restart")
+            text, text_rect = text_utils.get_centered_message("You've lost all of your lives!! Press any key to restart")
             score, score_rect = text_utils.get_centered_message("Your score was: " + str(self.points), height = half_screen_height + 50)
             self.screen.blit(text, text_rect)
             self.screen.blit(score, score_rect)
@@ -123,4 +130,6 @@ class Game:
                 exit()
 
             if event.type == pygame.KEYDOWN:
+                self.start_match_value()
                 self.run()
+                
